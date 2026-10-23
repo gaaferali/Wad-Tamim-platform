@@ -1,0 +1,112 @@
+{
+  "note": "All images from user-provided photographs. No generative editing or artificial upscaling. Warehouse photos are portrait: use a split hero layout or object-fit contain; do not stretch.",
+  "products": {
+    "tasali": "tasali-watermelon-seeds",
+    "tamarind": "tamarind-aradeib",
+    "gumArabic": "gum-arabic",
+    "frankincense": "frankincense-luban",
+    "gudeim": "gudeim-grewia",
+    "hibiscus": "hibiscus-bulk",
+    "sesame": "sesame"
+  },
+  "extraProducts": {
+    "hibiscusSecondary": "hibiscus-hand"
+  },
+  "heroRecommended": [
+    "warehouse-sacks-01",
+    "warehouse-sacks-02"
+  ],
+  "assets": {
+    "tasali-watermelon-seeds": {
+      "path": "/media/products/tasali-watermelon-seeds.webp",
+      "original": "تسالي.jpg",
+      "width": 768,
+      "height": 768,
+      "use": "products"
+    },
+    "tamarind-aradeib": {
+      "path": "/media/products/tamarind-aradeib.webp",
+      "original": "عرديب.jpg",
+      "width": 591,
+      "height": 1280,
+      "use": "products"
+    },
+    "gum-arabic": {
+      "path": "/media/products/gum-arabic.webp",
+      "original": "صمغ عربي.jpg",
+      "width": 736,
+      "height": 736,
+      "use": "products"
+    },
+    "frankincense-luban": {
+      "path": "/media/products/frankincense-luban.webp",
+      "original": "صمغ لبان.jpg",
+      "width": 736,
+      "height": 1104,
+      "use": "products"
+    },
+    "gudeim-grewia": {
+      "path": "/media/products/gudeim-grewia.webp",
+      "original": "2قضيم.jpg",
+      "width": 1053,
+      "height": 1280,
+      "use": "products"
+    },
+    "hibiscus-hand": {
+      "path": "/media/products/hibiscus-hand.webp",
+      "original": "كركدي1.jpg",
+      "width": 736,
+      "height": 920,
+      "use": "products"
+    },
+    "hibiscus-bulk": {
+      "path": "/media/products/hibiscus-bulk.webp",
+      "original": "كركدي 2.jpg",
+      "width": 960,
+      "height": 1280,
+      "use": "products"
+    },
+    "sesame": {
+      "path": "/media/products/sesame.webp",
+      "original": "سمسم.jpg",
+      "width": 736,
+      "height": 981,
+      "use": "products"
+    },
+    "warehouse-sacks-01": {
+      "path": "/media/operations/warehouse-sacks-01.webp",
+      "original": "1F98247F-CA65-4869-B18F-38A222A7DC13.jpeg",
+      "width": 960,
+      "height": 1280,
+      "use": "operations"
+    },
+    "warehouse-sacks-02": {
+      "path": "/media/operations/warehouse-sacks-02.webp",
+      "original": "23F9002D-FB40-4EDF-9B5E-50389209DA39.jpeg",
+      "width": 960,
+      "height": 1280,
+      "use": "operations"
+    },
+    "warehouse-sacks-03": {
+      "path": "/media/operations/warehouse-sacks-03.webp",
+      "original": "B38B8F80-7E53-4FEE-984F-E9F507A2C56B.jpeg",
+      "width": 960,
+      "height": 1280,
+      "use": "operations"
+    },
+    "logo-light": {
+      "path": "/media/branding/logo-light.webp",
+      "original": "B80E0535-1959-4742-8C5F-7DD4B7186117.jpeg",
+      "width": 1000,
+      "height": 1000,
+      "use": "branding"
+    },
+    "logo-dark-original": {
+      "path": "/media/branding/logo-dark-original.webp",
+      "original": "E8777BCD-CF6D-474F-A3EC-2F33CA417426.jpeg",
+      "width": 1000,
+      "height": 1000,
+      "use": "branding"
+    }
+  }
+}

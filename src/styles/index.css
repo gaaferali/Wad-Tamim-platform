@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-w-[320px] bg-cream text-ink antialiased transition-colors duration-300 dark:bg-forest-950 dark:text-stone-100;
+  }
+
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: Inter, Cairo, system-ui, sans-serif;
+  }
+
+  html[dir='rtl'] body,
+  html[dir='rtl'] button,
+  html[dir='rtl'] input,
+  html[dir='rtl'] select,
+  html[dir='rtl'] textarea {
+    font-family: Cairo, Inter, system-ui, sans-serif;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-forest-950 dark:text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-cream dark:ring-offset-forest-950;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-[1240px] px-5 sm:px-7 lg:px-10;
+  }
+
+  .section-space {
+    @apply py-20 sm:py-24 lg:py-28;
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-forest-700 dark:text-gold;
+  }
+
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-8 bg-gold;
+  }
+
+  .heading-display {
+    @apply text-4xl font-extrabold leading-[1.14] tracking-[-0.025em] sm:text-5xl lg:text-6xl;
+  }
+
+  .heading-section {
+    @apply text-3xl font-extrabold leading-tight tracking-[-0.02em] text-forest-950 sm:text-4xl lg:text-5xl dark:text-white;
+  }
+
+  .body-large {
+    @apply text-lg leading-8 text-stone-600 dark:text-stone-300;
+  }
+
+  .glass {
+    @apply border border-white/20 bg-white/10 backdrop-blur-md;
+  }
+
+  .card-surface {
+    @apply rounded-[1.75rem] border border-forest-900/10 bg-white shadow-card transition-colors dark:border-white/10 dark:bg-forest-900;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-forest-900/15 bg-white px-4 py-3.5 text-sm text-ink shadow-sm transition placeholder:text-stone-400 hover:border-forest-700/30 focus:border-forest-700 focus:outline-none focus:ring-4 focus:ring-forest-700/10 dark:border-white/15 dark:bg-forest-950 dark:text-white dark:placeholder:text-stone-500 dark:focus:border-gold;
+  }
+
+  .label {
+    @apply mb-2 block text-sm font-bold text-forest-950 dark:text-stone-100;
+  }
+
+  .error-text {
+    @apply mt-1.5 text-sm font-medium text-red-700 dark:text-red-300;
+  }
+
+  .soft-grid {
+    background-size: 24px 24px;
+    @apply bg-grain;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: reveal 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .float-gentle {
+    animation: floatGentle 6s ease-in-out infinite;
+  }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}

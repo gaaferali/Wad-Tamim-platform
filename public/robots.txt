@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://YOUR_PROJECT_ID.web.app/sitemap.xml
