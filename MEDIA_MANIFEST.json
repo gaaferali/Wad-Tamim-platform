@@ -13,8 +13,8 @@
     "hibiscusSecondary": "hibiscus-hand"
   },
   "heroRecommended": [
-    "warehouse-sacks-01",
-    "warehouse-sacks-02"
+    "loading",
+    "sacks"
   ],
   "assets": {
     "tasali-watermelon-seeds": {
@@ -72,6 +72,18 @@
       "width": 736,
       "height": 981,
       "use": "products"
+    },
+    "loading": {
+      "path": "/media/heroes/loading.jpg",
+      "width": 1290,
+      "height": 860,
+      "use": "hero"
+    },
+    "sacks": {
+      "path": "/media/heroes/sacks.jpg",
+      "width": 719,
+      "height": 485,
+      "use": "hero"
     },
     "warehouse-sacks-01": {
       "path": "/media/operations/warehouse-sacks-01.webp",

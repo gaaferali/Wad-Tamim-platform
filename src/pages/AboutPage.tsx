@@ -16,7 +16,7 @@ export function AboutPage() {
   return (
     <>
       <Seo titleKey="about.seoTitle" descriptionKey="about.seoDescription" image="/media/operations/warehouse-sacks-02.webp" />
-      <PageHero eyebrow={t('about.eyebrow')} title={t('about.heroTitle')} text={t('about.heroText')} image="/media/operations/warehouse-sacks-02.webp" alt={t('common.imageAltOperations')} objectPosition="center 50%" />
+      <PageHero eyebrow={t('about.eyebrow')} title={t('about.heroTitle')} text={t('about.heroText')} image="/media/heroes/sacks.jpg" alt={t('common.imageAltOperations')} objectPosition="center 48%" backgroundImage />
 
       <section className="section-space">
         <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-20">

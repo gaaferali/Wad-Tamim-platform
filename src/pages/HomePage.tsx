@@ -19,7 +19,7 @@ export function HomePage() {
   return (
     <>
       <Seo titleKey="home.seoTitle" descriptionKey="home.seoDescription" image="/media/operations/warehouse-sacks-01.webp" />
-      <PageHero eyebrow={t('home.eyebrow')} title={t('home.heroTitle')} text={t('home.heroText')} image="/media/operations/warehouse-sacks-01.webp" alt={t('common.imageAltOperations')} objectPosition="center 48%">
+      <PageHero eyebrow={t('home.eyebrow')} title={t('home.heroTitle')} text={t('home.heroText')} image="/media/heroes/loading.jpg" alt={t('common.imageAltOperations')} objectPosition="center 50%" backgroundImage>
         <ButtonLink to="/products" variant="light" arrow>{t('common.exploreProducts')}</ButtonLink>
         <ButtonLink to="/contact" variant="secondary" className="!border-white/45 !text-white hover:!bg-white hover:!text-forest-950" arrow>{t('common.requestQuote')}</ButtonLink>
         <span className="w-full pt-3 text-xs font-bold uppercase tracking-[0.14em] text-white/60">{t('home.heroNote')}</span>

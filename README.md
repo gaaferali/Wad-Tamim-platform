@@ -16,7 +16,7 @@ A production-oriented bilingual corporate website for **Wad Tamim for Crops / و
 
 ## Approved media mapping
 
-All listed photographs are user supplied. The optimized WebP assets are used without additional recompression, AI editing, or artificial upscaling. Original files remain in `public/media/originals/`.
+All listed photographs are user supplied. The approved assets are used without additional recompression, AI editing, or artificial upscaling. Unused duplicate and source images are excluded from the deployable `public/media/` tree.
 
 | Product | Asset |
 | --- | --- |
@@ -28,7 +28,7 @@ All listed photographs are user supplied. The optimized WebP assets are used wit
 | Sesame / السمسم | `/media/products/sesame.webp` |
 | Gudeim / القضيم | `/media/products/gudeim-grewia.webp` |
 
-The secondary hibiscus photograph is `/media/products/hibiscus-hand.webp`. The portrait operations photographs are `/media/operations/warehouse-sacks-01.webp`, `warehouse-sacks-02.webp`, and `warehouse-sacks-03.webp`; they are presented in portrait-aware layouts rather than stretched into full-width backgrounds.
+The secondary hibiscus photograph is `/media/products/hibiscus-hand.webp`. The Home and About heroes use `/media/heroes/loading.jpg` and `/media/heroes/sacks.jpg`. The portrait operations photographs are `/media/operations/warehouse-sacks-01.webp`, `warehouse-sacks-02.webp`, and `warehouse-sacks-03.webp`; they are presented in portrait-aware layouts rather than stretched into full-width backgrounds.
 
 Branding uses `/media/branding/logo-light.webp` in light mode and `/media/branding/logo-dark-original.webp` in dark mode.
 
