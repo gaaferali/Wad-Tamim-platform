@@ -1,14 +1,74 @@
+# Dependencies and generated builds
 node_modules/
 dist/
-.firebase/
-firebase-debug.log
-firebase-debug.*.log
-.env
-.env.*
-!.env.example
-.firebaserc
-*.local
+coverage/
+.vite/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+
+# Local environment and secret files
+.env
+.env.*
+!.env.example
+*.local
+config.local.*
+.secrets/
+secrets/
+*.secret
+*.secrets.*
+
+# Private keys and cloud credentials
+*.key
+*.pem
+*.p12
+service-account*.json
+*-service-account*.json
+firebase-adminsdk*.json
+google-credentials*.json
+credentials.json
+*-credentials.json
+
+# Firebase local state, project selection, logs, and emulator data
+.firebase/
+.firebaserc
+.runtimeconfig.json
+firebase-debug.log
+firebase-debug.*.log
+firestore-debug.log
+firestore-debug.*.log
+database-debug.log
+database-debug.*.log
+storage-debug.log
+storage-debug.*.log
+pubsub-debug.log
+pubsub-debug.*.log
+ui-debug.log
+ui-debug.*.log
+firebase-export-*/
+firebase-emulator-data/
+emulator-data/
+functions/.env
+functions/.env.*
+functions/lib/
+
+# Logs and package-manager caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+
+# Test, QA, and analysis output
 qa/
+playwright-report/
+test-results/
+graphify-out/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
