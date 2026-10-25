@@ -1,30 +1,23 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { AlertCircle, CheckCircle2, Mail, MessageCircle, Phone, Send, ShieldCheck } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
+import { Mail, Phone, ShieldCheck } from 'lucide-react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ButtonLink } from '../components/ButtonLink';
 import { PageHero } from '../components/PageHero';
 import { Seo } from '../components/Seo';
+import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { isProductSlug, products } from '../data/products';
 import { buildWhatsAppUrl, CONTACT } from '../lib/constants';
-import type { InquiryFormValues, InquiryResponse } from '../types/inquiry';
-
-type SubmissionState =
-  | { kind: 'idle' }
-  | { kind: 'saved'; emailStatus: InquiryResponse['emailStatus'] }
-  | { kind: 'error'; messageKey: 'contact.configError' | 'contact.serverError' | 'contact.requestIdError' };
+import type { InquiryFormValues } from '../types/inquiry';
 
 export function ContactPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const queryProduct = searchParams.get('product');
   const initialProduct = isProductSlug(queryProduct) ? queryProduct : '';
-  const formStartedAt = useRef(Date.now());
-  const requestIdRef = useRef<string | null>(null);
-  const [submission, setSubmission] = useState<SubmissionState>({ kind: 'idle' });
 
   const schema = useMemo(() => z.object({
     fullName: z.string().trim().min(2, t('contact.validations.nameRequired')).max(120, t('contact.validations.nameLong')),
@@ -33,62 +26,29 @@ export function ContactPage() {
     product: z.enum(['gum-arabic', 'frankincense', 'hibiscus', 'tasali', 'tamarind', 'sesame', 'gudeim'], { error: t('contact.validations.productRequired') }).or(z.literal('').refine(() => false, t('contact.validations.productRequired'))),
     quantity: z.string().trim().max(100, t('contact.validations.quantityLong')).optional(),
     inquiryType: z.enum(['domestic', 'export'], { error: t('contact.validations.typeRequired') }),
-    message: z.string().trim().min(10, t('contact.validations.messageRequired')).max(2000, t('contact.validations.messageLong')),
-    website: z.string().max(0, t('contact.honeypot')).optional()
+    message: z.string().trim().min(10, t('contact.validations.messageRequired')).max(2000, t('contact.validations.messageLong'))
   }), [t]);
 
-  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<InquiryFormValues>({
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<InquiryFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { fullName: '', phone: '', email: '', product: initialProduct, quantity: '', inquiryType: 'domestic', message: '', website: '' }
+    defaultValues: { fullName: '', phone: '', email: '', product: initialProduct, quantity: '', inquiryType: 'domestic', message: '' }
+  });
+
+  const buildInquiryMessage = (data: InquiryFormValues) => t('contact.whatsappMessage', {
+    name: data.fullName || t('contact.notProvided'),
+    phone: data.phone || t('contact.notProvided'),
+    email: data.email || t('contact.notProvided'),
+    product: data.product ? t(`products.${data.product}.name`) : t('contact.notProvided'),
+    quantity: data.quantity || t('contact.notProvided'),
+    type: t(data.inquiryType === 'export' ? 'contact.export' : 'contact.domestic'),
+    message: data.message || t('contact.notProvided')
   });
 
   const values = watch();
-  const selectedProductName = values.product ? t(`products.${values.product}.name`) : t('contact.notProvided');
-  const inquiryTypeName = t(values.inquiryType === 'export' ? 'contact.export' : 'contact.domestic');
-  const whatsappMessage = t('contact.whatsappMessage', {
-    name: values.fullName || t('contact.notProvided'),
-    phone: values.phone || t('contact.notProvided'),
-    product: selectedProductName,
-    quantity: values.quantity || t('contact.notProvided'),
-    type: inquiryTypeName,
-    message: values.message || t('contact.notProvided')
-  });
+  const whatsappMessage = buildInquiryMessage(values);
 
-  const onSubmit = async (data: InquiryFormValues) => {
-    setSubmission({ kind: 'idle' });
-    const endpoint = import.meta.env.VITE_INQUIRY_ENDPOINT;
-    if (!endpoint) {
-      setSubmission({ kind: 'error', messageKey: 'contact.configError' });
-      return;
-    }
-
-    if (!requestIdRef.current) {
-      try {
-        requestIdRef.current = crypto.randomUUID();
-      } catch {
-        setSubmission({ kind: 'error', messageKey: 'contact.requestIdError' });
-        return;
-      }
-    }
-    const requestId = requestIdRef.current;
-
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 20000);
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, email: data.email || null, quantity: data.quantity || null, requestId, formStartedAt: formStartedAt.current, source: 'website' }),
-        signal: controller.signal
-      });
-      const result = (await response.json().catch(() => ({}))) as InquiryResponse;
-      if (!response.ok || !result.ok) throw new Error(result.message ?? 'submission_failed');
-      setSubmission({ kind: 'saved', emailStatus: result.emailStatus });
-    } catch {
-      setSubmission({ kind: 'error', messageKey: 'contact.serverError' });
-    } finally {
-      window.clearTimeout(timeout);
-    }
+  const onSubmit = (data: InquiryFormValues) => {
+    window.location.assign(buildWhatsAppUrl(buildInquiryMessage(data)));
   };
 
   const inputError = (name: keyof InquiryFormValues) => errors[name]?.message;
@@ -107,21 +67,7 @@ export function ContactPage() {
             <h2 className="text-3xl font-extrabold text-forest-950 sm:text-4xl dark:text-white">{t('contact.formTitle')}</h2>
             <p className="mt-4 leading-7 text-stone-600 dark:text-stone-300">{t('contact.formText')}</p>
 
-            {submission.kind === 'saved' && (
-              <div className="mt-7 flex gap-3 rounded-2xl border border-emerald-600/25 bg-emerald-50 p-4 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100" role="status">
-                <CheckCircle2 className="mt-0.5 shrink-0" size={22} />
-                <div><p className="font-extrabold">{t('contact.successTitle')}</p><p className="mt-1 text-sm leading-6">{t(submission.emailStatus === 'sent' ? 'contact.successEmailSent' : 'contact.successEmailPending')}</p></div>
-              </div>
-            )}
-            {submission.kind === 'error' && (
-              <div className="mt-7 flex gap-3 rounded-2xl border border-red-600/20 bg-red-50 p-4 text-red-900 dark:bg-red-950/40 dark:text-red-100" role="alert">
-                <AlertCircle className="mt-0.5 shrink-0" size={22} />
-                <div><p className="font-extrabold">{t('contact.errorTitle')}</p><p className="mt-1 text-sm leading-6">{t(submission.messageKey)}</p></div>
-              </div>
-            )}
-
             <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6" noValidate>
-              <div className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true"><label>{t('contact.website')}<input tabIndex={-1} autoComplete="off" {...register('website')} /></label></div>
               <div className="grid gap-6 sm:grid-cols-2">
                 <div><label className="label" htmlFor="fullName">{t('contact.fullName')} *</label><input className="field" id="fullName" autoComplete="name" aria-invalid={!!errors.fullName} {...register('fullName')} />{inputError('fullName') && <p className="error-text">{inputError('fullName')}</p>}</div>
                 <div><label className="label" htmlFor="phone">{t('contact.phone')} *</label><input className="field" id="phone" dir="ltr" inputMode="tel" autoComplete="tel" aria-invalid={!!errors.phone} {...register('phone')} />{inputError('phone') && <p className="error-text">{inputError('phone')}</p>}</div>
@@ -133,7 +79,7 @@ export function ContactPage() {
               </div>
               <fieldset><legend className="label">{t('contact.inquiryType')} *</legend><div className="grid gap-3 sm:grid-cols-2"><label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-forest-900/15 p-4 transition has-[:checked]:border-forest-800 has-[:checked]:bg-sage dark:border-white/15 dark:has-[:checked]:border-gold dark:has-[:checked]:bg-white/10"><input type="radio" value="domestic" className="h-4 w-4 accent-forest-800" {...register('inquiryType')} /><span className="text-sm font-bold">{t('contact.domestic')}</span></label><label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-forest-900/15 p-4 transition has-[:checked]:border-forest-800 has-[:checked]:bg-sage dark:border-white/15 dark:has-[:checked]:border-gold dark:has-[:checked]:bg-white/10"><input type="radio" value="export" className="h-4 w-4 accent-forest-800" {...register('inquiryType')} /><span className="text-sm font-bold">{t('contact.export')}</span></label></div></fieldset>
               <div><label className="label" htmlFor="message">{t('contact.message')} *</label><textarea className="field min-h-36 resize-y" id="message" placeholder={t('contact.messagePlaceholder')} aria-invalid={!!errors.message} {...register('message')} />{inputError('message') && <p className="error-text">{inputError('message')}</p>}</div>
-              <div className="flex flex-col gap-3 sm:flex-row"><button type="submit" disabled={isSubmitting} className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-forest-900 px-6 py-3 text-sm font-extrabold text-white transition hover:bg-forest-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-gold dark:text-forest-950 dark:hover:bg-[#d8bb7a]"><Send size={17} />{isSubmitting ? t('common.loading') : t('contact.submit')}</button><a href={buildWhatsAppUrl(whatsappMessage)} target="_blank" rel="noreferrer" className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full border border-forest-900/20 px-6 py-3 text-center text-sm font-extrabold text-forest-950 transition hover:bg-sage dark:border-white/20 dark:text-white dark:hover:bg-white/10"><MessageCircle size={18} />{t('contact.whatsappInstead')}</a></div>
+              <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-[#25D366] px-7 py-3.5 text-sm font-extrabold text-white shadow-[0_12px_30px_rgba(37,211,102,.24)] transition hover:-translate-y-0.5 hover:bg-[#1fbd59] hover:shadow-[0_14px_34px_rgba(37,211,102,.34)]"><WhatsAppIcon size={21} />{t('contact.submitWhatsApp')}</button>
               <p className="flex items-start gap-2 text-xs leading-5 text-stone-500 dark:text-stone-400"><ShieldCheck className="mt-0.5 shrink-0" size={15} />{t('contact.privacy')}</p>
             </form>
           </div>
@@ -143,7 +89,7 @@ export function ContactPage() {
               <p className="eyebrow !text-gold">{t('contact.directKicker')}</p><h2 className="text-3xl font-extrabold">{t('contact.directTitle')}</h2><p className="mt-4 leading-7 text-stone-300">{t('contact.directText')}</p>
               <div className="mt-8 space-y-3">
                 <a href={CONTACT.phoneHref} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold text-forest-950"><Phone size={20} /></span><span><span className="block text-xs text-stone-400">{t('common.phone')}</span><span className="mt-0.5 block font-bold" dir="ltr">{CONTACT.phoneInternational}</span></span></a>
-                <a href={buildWhatsAppUrl(whatsappMessage)} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#25D366] text-white"><MessageCircle size={20} /></span><span><span className="block text-xs text-stone-400">{t('common.whatsapp')}</span><span className="mt-0.5 block font-bold" dir="ltr">{CONTACT.phoneDisplay}</span></span></a>
+                <a href={buildWhatsAppUrl(whatsappMessage)} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#25D366] text-white"><WhatsAppIcon size={21} /></span><span><span className="block text-xs text-stone-400">{t('common.whatsapp')}</span><span className="mt-0.5 block font-bold" dir="ltr">{CONTACT.phoneDisplay}</span></span></a>
                 <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-forest-950"><Mail size={20} /></span><span className="min-w-0"><span className="block text-xs text-stone-400">{t('common.email')}</span><span className="mt-0.5 block truncate text-sm font-bold">{CONTACT.email}</span></span></a>
               </div>
             </div>

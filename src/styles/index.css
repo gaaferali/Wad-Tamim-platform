@@ -18,7 +18,7 @@
   }
 
   body {
-    @apply m-0 min-w-[320px] bg-cream text-ink antialiased transition-colors duration-300 dark:bg-forest-950 dark:text-stone-100;
+    @apply m-0 min-w-[320px] overflow-x-hidden bg-cream text-ink antialiased transition-colors duration-300 dark:bg-forest-950 dark:text-stone-100;
   }
 
   body,

@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b --pretty false",
     "preview": "vite preview",
-    "functions:build": "npm --prefix functions run build",
-    "check": "npm run typecheck && npm run functions:build && npm run build"
+    "check": "npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

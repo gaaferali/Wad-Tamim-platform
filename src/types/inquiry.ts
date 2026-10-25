@@ -10,12 +10,4 @@ export type InquiryFormValues = {
   quantity?: string;
   inquiryType: InquiryType;
   message: string;
-  website?: string;
-};
-
-export type InquiryResponse = {
-  ok: boolean;
-  inquiryId?: string;
-  emailStatus?: 'sent' | 'failed' | 'pending' | 'sending';
-  message?: string;
 };

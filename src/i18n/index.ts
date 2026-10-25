@@ -144,13 +144,13 @@ const resources = {
       },
       contact: {
         seoTitle: 'تواصل معنا | ود تميم للمحاصيل',
-        seoDescription: 'أرسل استفسار توريد محلي أو تصدير إلى ود تميم للمحاصيل عبر النموذج الآمن أو واتساب.',
+        seoDescription: 'أرسل استفسار توريد محلي أو تصدير إلى ود تميم للمحاصيل مباشرة عبر واتساب.',
         eyebrow: 'تواصل معنا',
         heroTitle: 'دعونا نفهم طلبكم التجاري',
         heroText: 'أرسل المنتج والكمية ونوع الاستفسار. لن يُعتبر الإرسال تأكيداً للتوفر أو السعر حتى تتم المراجعة والتواصل.',
         formKicker: 'نموذج الاستفسار',
         formTitle: 'أرسل تفاصيل طلبك',
-        formText: 'الحقول المعلّمة بنجمة مطلوبة. تُحفظ الاستفسارات عبر خادم آمن عند اكتمال إعداد Firebase.',
+        formText: 'الحقول المعلّمة بنجمة مطلوبة. عند الإرسال سيفتح واتساب برسالة جاهزة تحتوي على تفاصيل طلبك.',
         fullName: 'الاسم الكامل',
         phone: 'رقم الهاتف أو واتساب',
         email: 'البريد الإلكتروني',
@@ -164,23 +164,13 @@ const resources = {
         export: 'استفسار تصدير',
         message: 'الرسالة أو التفاصيل الإضافية',
         messagePlaceholder: 'اذكر المواصفات أو الوجهة أو الجدول الزمني وأي تفاصيل مهمة.',
-        submit: 'إرسال الاستفسار',
-        whatsappInstead: 'إرسال التفاصيل عبر واتساب',
-        privacy: 'باختيار الإرسال، توافق على استخدام بياناتك للرد على هذا الاستفسار فقط.',
+        submitWhatsApp: 'إرسال الاستفسار عبر واتساب',
+        privacy: 'سيتم فتح واتساب لإرسال الرسالة. لا يحفظ هذا الموقع بيانات النموذج ولا يرسلها بالبريد الإلكتروني.',
         directKicker: 'تواصل مباشر',
         directTitle: 'نحن قريبون منكم',
         directText: 'يمكنكم الاتصال أو استخدام واتساب أو البريد الإلكتروني لمناقشة استفسار تجاري.',
         businessInfoTitle: 'معلومات الاستفسار',
         businessInfoText: 'يرجى ذكر المنتج والكمية ونوع الطلب لتسهيل المتابعة. لا يمثل التواصل تأكيداً للسعر أو التوفر.',
-        successTitle: 'تم حفظ استفسارك',
-        successEmailSent: 'تم حفظ الطلب وإرسال إشعار إلى فريق ود تميم. سنتواصل معك عبر البيانات المقدمة.',
-        successEmailPending: 'تم حفظ الطلب بنجاح، لكن تعذر إرسال إشعار البريد حالياً. بياناتك محفوظة للمتابعة.',
-        errorTitle: 'تعذر إرسال الاستفسار',
-        configError: 'خدمة النموذج لم تُضبط بعد. استخدم واتساب أو الهاتف الآن، ثم أكمل إعداد VITE_INQUIRY_ENDPOINT.',
-        serverError: 'لم يتم حفظ الاستفسار. يرجى المحاولة مرة أخرى أو استخدام واتساب.',
-        requestIdError: 'تعذر بدء الطلب. يرجى تحديث الصفحة والمحاولة مرة أخرى.',
-        honeypot: 'اترك هذا الحقل فارغاً',
-        website: 'الموقع الإلكتروني',
         validations: {
           nameRequired: 'يرجى إدخال الاسم الكامل.',
           nameLong: 'الاسم أطول من الحد المسموح.',
@@ -192,7 +182,8 @@ const resources = {
           messageRequired: 'يرجى إضافة تفاصيل كافية عن الطلب.',
           messageLong: 'الرسالة أطول من الحد المسموح.'
         },
-        whatsappMessage: 'مرحباً ود تميم للمحاصيل،\nالاسم: {{name}}\nالهاتف: {{phone}}\nالمنتج: {{product}}\nالكمية: {{quantity}}\nنوع الاستفسار: {{type}}\nالتفاصيل: {{message}}',
+        whatsappGreeting: 'مرحباً ود تميم للمحاصيل، أود الاستفسار عن المحاصيل المتاحة لديكم.',
+        whatsappMessage: 'مرحباً ود تميم للمحاصيل،\nالاسم: {{name}}\nالهاتف: {{phone}}\nالبريد الإلكتروني: {{email}}\nالمنتج: {{product}}\nالكمية: {{quantity}}\nنوع الاستفسار: {{type}}\nالتفاصيل: {{message}}',
         notProvided: 'غير محدد'
       },
       footer: {
@@ -252,7 +243,7 @@ const resources = {
         gudeim: { arName: 'القضيم', enName: 'Gudeim / Grewia Fruit', name: 'Gudeim / Grewia Fruit — القضيم', description: 'Gudeim fruit associated with Grewia species, available for inquiries by quantity and requested form.' }
       },
       contact: {
-        seoTitle: 'Contact Us | Wad Tamim for Crops', seoDescription: 'Send a domestic supply or export inquiry to Wad Tamim for Crops using the secure form or WhatsApp.', eyebrow: 'Contact Us', heroTitle: 'Let us understand your commercial request', heroText: 'Send the product, quantity, and inquiry type. Submission does not confirm availability or pricing until reviewed.', formKicker: 'Inquiry form', formTitle: 'Send your request details', formText: 'Fields marked with an asterisk are required. Inquiries are stored through a secure server after Firebase configuration is complete.', fullName: 'Full name', phone: 'Phone or WhatsApp number', email: 'Email address', optional: 'Optional', product: 'Product', chooseProduct: 'Choose a product', quantity: 'Requested quantity', quantityPlaceholder: 'Example: 2 tonnes or 50 sacks', inquiryType: 'Inquiry type', domestic: 'Domestic Supply', export: 'Export Inquiry', message: 'Message or additional details', messagePlaceholder: 'Include specifications, destination, timing, or any important details.', submit: 'Send Inquiry', whatsappInstead: 'Send Details on WhatsApp', privacy: 'By submitting, you agree that your details may be used only to respond to this inquiry.', directKicker: 'Direct contact', directTitle: 'We are within reach', directText: 'Call, use WhatsApp, or email us to discuss a commercial inquiry.', businessInfoTitle: 'Inquiry information', businessInfoText: 'Include the crop, quantity, and request type to help us respond. Contact does not confirm price or availability.', successTitle: 'Your inquiry was saved', successEmailSent: 'The request was saved and the Wad Tamim team was notified by email. We will use your contact details to follow up.', successEmailPending: 'The request was saved, but the email notification could not be delivered right now. Your details remain stored for follow-up.', errorTitle: 'We could not send the inquiry', configError: 'The form service is not configured yet. Please use WhatsApp or phone now, then configure VITE_INQUIRY_ENDPOINT.', serverError: 'The inquiry was not saved. Please try again or use WhatsApp.', requestIdError: 'The request could not start. Refresh the page and try again.', honeypot: 'Leave this field empty', website: 'Website', validations: { nameRequired: 'Please enter your full name.', nameLong: 'The name is longer than allowed.', phoneRequired: 'Enter a valid phone or WhatsApp number.', emailInvalid: 'Enter a valid email address.', productRequired: 'Please choose a product.', quantityLong: 'The quantity details are longer than allowed.', typeRequired: 'Please select an inquiry type.', messageRequired: 'Please add enough detail about your request.', messageLong: 'The message is longer than allowed.' }, whatsappMessage: 'Hello Wad Tamim for Crops,\nName: {{name}}\nPhone: {{phone}}\nProduct: {{product}}\nQuantity: {{quantity}}\nInquiry type: {{type}}\nDetails: {{message}}', notProvided: 'Not provided'
+        seoTitle: 'Contact Us | Wad Tamim for Crops', seoDescription: 'Send a domestic supply or export inquiry to Wad Tamim for Crops directly through WhatsApp.', eyebrow: 'Contact Us', heroTitle: 'Let us understand your commercial request', heroText: 'Send the product, quantity, and inquiry type. Submission does not confirm availability or pricing until reviewed.', formKicker: 'Inquiry form', formTitle: 'Send your request details', formText: 'Fields marked with an asterisk are required. Submitting opens WhatsApp with a prepared message containing your request details.', fullName: 'Full name', phone: 'Phone or WhatsApp number', email: 'Email address', optional: 'Optional', product: 'Product', chooseProduct: 'Choose a product', quantity: 'Requested quantity', quantityPlaceholder: 'Example: 2 tonnes or 50 sacks', inquiryType: 'Inquiry type', domestic: 'Domestic Supply', export: 'Export Inquiry', message: 'Message or additional details', messagePlaceholder: 'Include specifications, destination, timing, or any important details.', submitWhatsApp: 'Send Inquiry on WhatsApp', privacy: 'WhatsApp will open to send the message. This website does not store the form data or send it by email.', directKicker: 'Direct contact', directTitle: 'We are within reach', directText: 'Call, use WhatsApp, or email us to discuss a commercial inquiry.', businessInfoTitle: 'Inquiry information', businessInfoText: 'Include the crop, quantity, and request type to help us respond. Contact does not confirm price or availability.', validations: { nameRequired: 'Please enter your full name.', nameLong: 'The name is longer than allowed.', phoneRequired: 'Enter a valid phone or WhatsApp number.', emailInvalid: 'Enter a valid email address.', productRequired: 'Please choose a product.', quantityLong: 'The quantity details are longer than allowed.', typeRequired: 'Please select an inquiry type.', messageRequired: 'Please add enough detail about your request.', messageLong: 'The message is longer than allowed.' }, whatsappGreeting: 'Hello Wad Tamim for Crops, I would like to inquire about your available crops.', whatsappMessage: 'Hello Wad Tamim for Crops,\nName: {{name}}\nPhone: {{phone}}\nEmail: {{email}}\nProduct: {{product}}\nQuantity: {{quantity}}\nInquiry type: {{type}}\nDetails: {{message}}', notProvided: 'Not provided'
       },
       footer: { description: 'Sudanese agricultural crops supplied in commercial quantities for domestic markets and export inquiries.', quickLinks: 'Quick Links', products: 'Our Crops', contact: 'Contact', rights: 'All rights reserved.', note: 'Images are customer supplied; sack photographs do not imply ownership of a particular facility.' },
       notFound: { seoTitle: 'Page Not Found | Wad Tamim for Crops', eyebrow: 'Error 404', title: 'This page is not in the harvest', text: 'The link may have changed or is no longer available. Return home or explore our products.', home: 'Back to Home' }
