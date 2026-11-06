@@ -64,7 +64,7 @@ npm run build
 
 The production output is generated in `dist/`. That directory is intentionally ignored because Firebase and other hosting systems should build it from the committed source.
 
-## Firebase deployment
+## Firebase deployment how i deployed it
 
 This repository contains only the non-secret Firebase Hosting configuration. It does not contain Cloud Functions, Firestore rules, service-account credentials, or database exports.
 
